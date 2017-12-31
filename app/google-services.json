@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "691333635230",
+    "firebase_url": "https://promethee-11741.firebaseio.com",
+    "project_id": "promethee-11741",
+    "storage_bucket": "promethee-11741.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:691333635230:android:7f0c33141325245f",
+        "android_client_info": {
+          "package_name": "com.example.tommywahyu44.promethee"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "691333635230-58teg594o891st0m02s2h8taqam7l1qf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tommywahyu44.promethee",
+            "certificate_hash": "09fa9931a78e4324d88bb3218164064a5932e76b"
+          }
+        },
+        {
+          "client_id": "691333635230-m2te87rgj9e3tkvcveqmanf673igefns.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIXbYu9tfVhKM7Yg9sR1YDLXooXcBVrsY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "691333635230-m2te87rgj9e3tkvcveqmanf673igefns.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

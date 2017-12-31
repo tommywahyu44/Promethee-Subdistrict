@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Promethee</string>
+    <string name="float_digit">%.1f</string>
+</resources>
