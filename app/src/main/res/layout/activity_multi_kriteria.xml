@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    tools:context="com.example.tommywahyu44.promethee.MultiKriteriaActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:gravity="right"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/checkNextRank"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:foregroundGravity="right"
+            android:paddingRight="16dp"
+            android:paddingLeft="16dp"
+            android:clickable="true"
+            android:src="@drawable/ic_check_black_24dp"/>
+
+    </LinearLayout>
+    <TableLayout
+        android:id="@+id/tableLayoutIdIndeks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+       >
+
+        <TableRow
+            android:id="@+id/rowLay"
+            android:background="@color/colorPrimaryDark"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/Kecamatan1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Kecamatan"
+                android:gravity="center"
+                />
+
+            <TextView
+                android:id="@+id/Kecamatan2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Kecamatan"
+                android:gravity="center"
+                />
+
+            <TextView
+                android:id="@+id/Indeks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Indeks Preferensi"
+                android:layout_gravity="center"
+                android:gravity="center"
+                 />
+
+
+
+        </TableRow>
+
+
+    </TableLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        >
+
+        <TableLayout
+            android:id="@+id/tableLayoutIdAIndeks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+        </TableLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

@@ -72,6 +72,7 @@ public class SetKecamatanActivity extends AppCompatActivity implements View.OnCl
         CheckNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 finish();
               startActivity(new Intent(SetKecamatanActivity.this, PreferensiActivity.class));
             }

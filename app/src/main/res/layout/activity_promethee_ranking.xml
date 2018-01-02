@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    tools:context="com.example.tommywahyu44.promethee.MultiKriteriaActivity">
+    <TableLayout
+        android:id="@+id/tableLayoutIdRank"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <TableRow
+            android:id="@+id/rowLay"
+            android:background="@color/colorPrimaryDark"
+            android:padding="5dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Kecamatan"
+                android:gravity="center"
+                />
+
+            <TextView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Leaving"
+                android:gravity="center"
+                />
+
+            <TextView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Entering"
+                android:layout_gravity="center"
+                android:gravity="center"
+                />
+
+            <TextView
+                android:id="@+id/Kecamatan1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Net"
+                android:gravity="center"
+                />
+
+            <TextView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Rank"
+                android:gravity="center"
+                />
+
+            <TextView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Ket."
+                android:layout_gravity="center"
+                android:gravity="center"
+                />
+
+
+
+        </TableRow>
+
+
+    </TableLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        >
+
+        <TableLayout
+            android:id="@+id/tableLayoutIdARank"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+        </TableLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

@@ -3,13 +3,36 @@
     android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/cardview_light_background"
     android:orientation="vertical"
     tools:context="com.example.tommywahyu44.promethee.PreferensiActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:gravity="right"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/checkNextIndeks"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:foregroundGravity="right"
+            android:paddingRight="16dp"
+            android:paddingLeft="16dp"
+            android:clickable="true"
+            android:src="@drawable/ic_check_black_24dp"/>
+
+    </LinearLayout>
+
+
     <TableLayout
         android:id="@+id/tableLayoutId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
+       >
 
         <TableRow
             android:id="@+id/rowLay"
@@ -393,5 +416,9 @@
 
     </TableLayout>
 
+
 </android.support.v4.widget.NestedScrollView>
+
+
+
 </LinearLayout>

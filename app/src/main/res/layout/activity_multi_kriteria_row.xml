@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ECEFF1"
+    android:padding="5dp">
+
+    <TextView
+        android:id="@+id/KecamatanIndex1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:text="A"
+        android:textColor="#000"
+        android:gravity="center"
+        />
+
+    <TextView
+        android:id="@+id/KecamatanIndex2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:text="B"
+        android:textColor="#000"
+        android:gravity="center"
+        />
+
+    <TextView
+        android:id="@+id/IndeksPref"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:text="0,4"
+        android:gravity="center"
+        android:textColor="#000"
+         />
+
+</TableRow>

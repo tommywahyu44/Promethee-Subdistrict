@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-
+    android:id="@+id/defense"
     android:elevation="4dp"
     android:orientation="vertical">
 
 
     <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
+        android:id="@+id/KecamatanCard"
         android:layout_height="wrap_content"
         android:elevation="4dp">
 
@@ -390,4 +391,4 @@
         </LinearLayout>
 
     </android.support.v7.widget.CardView>
-</android.support.design.widget.CoordinatorLayout>
+</LinearLayout>
