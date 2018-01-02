@@ -26,7 +26,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:hint="Batas T tipe 2"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             android:textColorHint="@color/colorPrimary"
             android:textColor="#000"
            />
@@ -44,7 +44,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:hint="Batas M tipe 3"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             android:textColorHint="@color/colorPrimary"
             android:textColor="#000"
          />
@@ -62,7 +62,7 @@
             android:layout_height="match_parent"
             android:hint="Batas P tipe 4"
             android:layout_weight="1"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             android:textColorHint="@color/colorPrimary"
             android:textColor="#000"
            />
@@ -80,7 +80,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:hint="Batas Q tipe 4"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             android:textColorHint="@color/colorPrimary"
             android:textColor="#000"
             />
@@ -98,7 +98,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:hint="Batas S tipe 5"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             android:textColorHint="@color/colorPrimary"
             android:textColor="#000"
             />
@@ -116,7 +116,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:hint="Batas R tipe 5"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             android:textColorHint="@color/colorPrimary"
             android:textColor="#000"
             />
@@ -134,7 +134,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:hint="Batas Psi tipe 6"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             android:textColorHint="@color/colorPrimary"
             android:textColor="#000"
            />

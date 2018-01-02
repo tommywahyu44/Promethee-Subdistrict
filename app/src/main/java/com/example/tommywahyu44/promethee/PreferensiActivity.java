@@ -361,7 +361,7 @@ public class PreferensiActivity extends AppCompatActivity {
                             if (Math.abs(arrPrefD[i][j][a]) <= batasPref[4])
                                 arrPrefHd[i][j][a] = 0;
                             else if (Math.abs(arrPrefD[i][j][a]) <= (batasPref[4] + batasPref[5]))
-                                arrPrefHd[i][j][a] = (arrPrefHd[i][j][a] - batasPref[4]) / batasPref[5];
+                                arrPrefHd[i][j][a] = (arrPrefD[i][j][a] - batasPref[4]) / batasPref[5];
                             else arrPrefHd[i][j][a] = 1;
                         }
                     }
