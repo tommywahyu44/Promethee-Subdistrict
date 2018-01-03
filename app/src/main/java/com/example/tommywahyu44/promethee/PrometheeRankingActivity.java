@@ -80,9 +80,10 @@ public class PrometheeRankingActivity extends AppCompatActivity {
         ((TextView) row.findViewById(R.id.EnteringFlow)).setText(Entering);
         ((TextView) row.findViewById(R.id.NetFlow)).setText(Net);
         ((TextView) row.findViewById(R.id.Ranking)).setText(Rank);
-        if (Double.parseDouble(Net) >= 0)
-            ((TextView) row.findViewById(R.id.Keterangan)).setText("Diterima");
-        else ((TextView) row.findViewById(R.id.Keterangan)).setText("Ditolak");
+        if (Integer.parseInt(Rank) < 5)
+            ((TextView) row.findViewById(R.id.Keterangan)).setText("Rawan");
+        else if (Integer.parseInt(Rank) < 10) ((TextView) row.findViewById(R.id.Keterangan)).setText("Waspada");
+        else ((TextView) row.findViewById(R.id.Keterangan)).setText("Aman");
 
         tableLayoutA.addView(row);
     }
