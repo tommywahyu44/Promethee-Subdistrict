@@ -26,8 +26,8 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference mRootref;
     TableRow row;
     TableLayout tableLayout;
-    Button Hapus, Tambah, Selesai,TambahShow,HapusShow;
-    EditText editHapus,editTambah1,editTambah2,editTambah3;
+    Button Hapus, Tambah, Selesai, TambahShow, HapusShow;
+    EditText editHapus, editTambah1, editTambah2, editTambah3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish();
-                startActivity(new Intent (MainActivity.this, SetKecamatanActivity.class));
+                startActivity(new Intent(MainActivity.this, SetKecamatanActivity.class));
 
             }
         });
@@ -72,13 +72,14 @@ public class MainActivity extends AppCompatActivity {
         Tambah.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TambahRow(editTambah1.getText().toString(),editTambah2.getText().toString(),editTambah3.getText().toString());
-                Tambah.setVisibility(View.GONE);
-                tableLayout.setVisibility(View.VISIBLE);
-                TambahShow.setVisibility(View.VISIBLE);
 
+                if (Integer.parseInt(editTambah2.getText().toString()) <= 100 && Integer.parseInt(editTambah2.getText().toString()) >= 0 && Integer.parseInt(editTambah3.getText().toString()) <= 6 && Integer.parseInt(editTambah3.getText().toString()) >= 1) {
+                    TambahRow(editTambah1.getText().toString(), editTambah2.getText().toString(), editTambah3.getText().toString());
+                    Tambah.setVisibility(View.GONE);
+                    tableLayout.setVisibility(View.VISIBLE);
+                    TambahShow.setVisibility(View.VISIBLE);
 
-
+                } else Toast.makeText(MainActivity.this,"Inputan salah",Toast.LENGTH_LONG ).show();
             }
         });
 
@@ -149,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void TambahRow (final String kriteria, String bobot, String preferensi) {
+    public void TambahRow(final String kriteria, String bobot, String preferensi) {
         tableLayout = findViewById(R.id.tableLayoutMenu);
         row = (TableRow) getLayoutInflater().inflate(R.layout.activity_menu_row, null);
 
@@ -159,8 +160,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         tableLayout.addView(row);
-        mRootref.child("Kriteria").child(kriteria).child("Bobot"+kriteria).setValue(bobot);
-        mRootref.child("Kriteria").child(kriteria).child("Preferensi"+kriteria).setValue(preferensi);
+        mRootref.child("Kriteria").child(kriteria).child("Bobot" + kriteria).setValue(bobot);
+        mRootref.child("Kriteria").child(kriteria).child("Preferensi" + kriteria).setValue(preferensi);
         DatabaseReference event = mRootref.child("Kecamatan");
         event.addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -169,7 +170,6 @@ public class MainActivity extends AppCompatActivity {
                 for (final DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     String a = postSnapshot.getKey().toString();
                     mRootref.child("Kecamatan").child(a).child(kriteria).setValue(0);
-
 
 
                 }
@@ -185,21 +185,21 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void HapusRow (int Row) {
+    public void HapusRow(int Row) {
         tableLayout = findViewById(R.id.tableLayoutMenu);
         row = (TableRow) getLayoutInflater().inflate(R.layout.activity_menu_row, null);
         TableRow row2 = (TableRow) tableLayout.getChildAt(Row);
-        TextView text= (TextView) row2.getChildAt(0);
+        TextView text = (TextView) row2.getChildAt(0);
         final String text2 = text.getText().toString();
         mRootref.child("Kriteria").child(text2).getRef().removeValue();
-        tableLayout.removeViewsInLayout(Row,1);
+        tableLayout.removeViewsInLayout(Row, 1);
         DatabaseReference event = mRootref.child("Kecamatan");
         event.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (final DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                   postSnapshot.child(text2).getRef().removeValue();
+                    postSnapshot.child(text2).getRef().removeValue();
 
 
                 }

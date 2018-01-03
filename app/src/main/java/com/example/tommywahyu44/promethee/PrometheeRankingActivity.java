@@ -1,8 +1,11 @@
 package com.example.tommywahyu44.promethee;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -19,7 +22,7 @@ public class PrometheeRankingActivity extends AppCompatActivity {
     double[] arrEntering = new double[14];
     double[] arrNet = new double[14];
     private ProgressDialog progressDialog;
-
+    ImageView CheckNextHasil;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +31,16 @@ public class PrometheeRankingActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Please Wait");
         progressDialog.show();
+
+
+        CheckNextHasil = findViewById(R.id.checkNextHasil);
+        CheckNextHasil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+                startActivity(new Intent(PrometheeRankingActivity.this, ListviewHasilActivity.class));
+            }
+        });
 
         for (int i = 0; i < 14; i++) {
             arrLeaving[i] = 0;
@@ -50,6 +63,7 @@ public class PrometheeRankingActivity extends AppCompatActivity {
                 }
             }
             InsertRow(MultiKriteriaActivity.namaKecamatan[pos], String.format("%.3f", arrLeaving[pos]), String.format("%.3f", arrEntering[pos]), String.format("%.3f", arrNet[pos]), Integer.toString(i + 1));
+            ListviewHasilActivity.values[i] = MultiKriteriaActivity.namaKecamatan[pos];
             arrNet[pos] = -100000;
         }
         progressDialog.dismiss();

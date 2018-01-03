@@ -339,7 +339,7 @@ public class PreferensiActivity extends AppCompatActivity {
                     for (int i = 0; i < 14; i++) {
                         for (int j = 0; j < 14; j++) {
                             if (Math.abs(arrPrefD[i][j][a]) <= batasPref[1])
-                                arrPrefHd[i][j][a] = arrPrefD[i][j][a] / batasPref[1];
+                                arrPrefHd[i][j][a] = Math.abs(arrPrefD[i][j][a]) / batasPref[1];
                             else arrPrefHd[i][j][a] = 1;
                         }
                     }
@@ -361,7 +361,7 @@ public class PreferensiActivity extends AppCompatActivity {
                             if (Math.abs(arrPrefD[i][j][a]) <= batasPref[4])
                                 arrPrefHd[i][j][a] = 0;
                             else if (Math.abs(arrPrefD[i][j][a]) <= (batasPref[4] + batasPref[5]))
-                                arrPrefHd[i][j][a] = (arrPrefD[i][j][a] - batasPref[4]) / batasPref[5];
+                                arrPrefHd[i][j][a] = (Math.abs(arrPrefD[i][j][a]) - batasPref[4]) / batasPref[5];
                             else arrPrefHd[i][j][a] = 1;
                         }
                     }
