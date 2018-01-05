@@ -34,7 +34,7 @@ public class PreferensiActivity extends AppCompatActivity {
     public static double[][][] arrPrefHd = new double[14][14][10];
     public static int[] bobotKriteria = new int[10];
     int[] preferensiKriteria = new int[10];
-    double[] batasPref = new double[7];
+    static double[][] batasPref = new double[7][10];
     private ProgressDialog progressDialog;
     ImageView CheckNextIndeks;
 
@@ -225,15 +225,6 @@ public class PreferensiActivity extends AppCompatActivity {
                 }
                 //l adalah perpindahan kecamatan perb.1,m perpindahan kecamatan perb.2,k kriteria
 
-
-                batasPref[0] = Double.parseDouble(dataSnapshot.child("Batas").child("BatasTipe2").getValue().toString());
-                batasPref[1] = Double.parseDouble(dataSnapshot.child("Batas").child("BatasTipe3").getValue().toString());
-                batasPref[2] = Double.parseDouble(dataSnapshot.child("Batas").child("BatasTipe4").getValue().toString());
-                batasPref[3] = Double.parseDouble(dataSnapshot.child("Batas").child("BatasTipe4b").getValue().toString());
-                batasPref[4] = Double.parseDouble(dataSnapshot.child("Batas").child("BatasTipe5").getValue().toString());
-                batasPref[5] = Double.parseDouble(dataSnapshot.child("Batas").child("BatasTipe5b").getValue().toString());
-                batasPref[6] = Double.parseDouble(dataSnapshot.child("Batas").child("BatasTipe6").getValue().toString());
-
                 switch (countKriteria) {
                     case 10:
                         KTT1.setVisibility(View.VISIBLE);
@@ -329,7 +320,7 @@ public class PreferensiActivity extends AppCompatActivity {
                 case 2:
                     for (int i = 0; i < 14; i++) {
                         for (int j = 0; j < 14; j++) {
-                            if (Math.abs(arrPrefD[i][j][a]) <= batasPref[0])
+                            if (Math.abs(arrPrefD[i][j][a]) <= batasPref[0][a])
                                 arrPrefHd[i][j][a] = 0;
                             else arrPrefHd[i][j][a] = 1;
                         }
@@ -338,8 +329,8 @@ public class PreferensiActivity extends AppCompatActivity {
                 case 3:
                     for (int i = 0; i < 14; i++) {
                         for (int j = 0; j < 14; j++) {
-                            if (Math.abs(arrPrefD[i][j][a]) <= batasPref[1])
-                                arrPrefHd[i][j][a] = Math.abs(arrPrefD[i][j][a]) / batasPref[1];
+                            if (Math.abs(arrPrefD[i][j][a]) <= batasPref[1][a])
+                                arrPrefHd[i][j][a] = Math.abs(arrPrefD[i][j][a]) / batasPref[1][a];
                             else arrPrefHd[i][j][a] = 1;
                         }
                     }
@@ -347,9 +338,9 @@ public class PreferensiActivity extends AppCompatActivity {
                 case 4:
                     for (int i = 0; i < 14; i++) {
                         for (int j = 0; j < 14; j++) {
-                            if (Math.abs(arrPrefD[i][j][a]) <= batasPref[3])
+                            if (Math.abs(arrPrefD[i][j][a]) <= batasPref[3][a])
                                 arrPrefHd[i][j][a] = 0;
-                            else if (Math.abs(arrPrefD[i][j][a]) <= (batasPref[2] + batasPref[3]))
+                            else if (Math.abs(arrPrefD[i][j][a]) <= (batasPref[2][a] + batasPref[3][a]))
                                 arrPrefHd[i][j][a] = 0.5;
                             else arrPrefHd[i][j][a] = 1;
                         }
@@ -358,10 +349,10 @@ public class PreferensiActivity extends AppCompatActivity {
                 case 5:
                     for (int i = 0; i < 14; i++) {
                         for (int j = 0; j < 14; j++) {
-                            if (Math.abs(arrPrefD[i][j][a]) <= batasPref[4])
+                            if (Math.abs(arrPrefD[i][j][a]) <= batasPref[4][a])
                                 arrPrefHd[i][j][a] = 0;
-                            else if (Math.abs(arrPrefD[i][j][a]) <= (batasPref[4] + batasPref[5]))
-                                arrPrefHd[i][j][a] = (Math.abs(arrPrefD[i][j][a]) - batasPref[4]) / batasPref[5];
+                            else if (Math.abs(arrPrefD[i][j][a]) <= (batasPref[4][a] + batasPref[5][a]))
+                                arrPrefHd[i][j][a] = (Math.abs(arrPrefD[i][j][a]) - batasPref[4][a]) / batasPref[5][a];
                             else arrPrefHd[i][j][a] = 1;
                         }
                     }
@@ -372,7 +363,7 @@ public class PreferensiActivity extends AppCompatActivity {
                             if (Math.abs(arrPrefD[i][j][a]) <= 0)
                                 arrPrefHd[i][j][a] = 0;
                             else
-                                arrPrefHd[i][j][a] = 1 - Math.pow(2.71828, -(arrPrefD[i][j][a] * arrPrefD[i][j][a]) / (2.0d * (batasPref[6] * batasPref[6])));
+                                arrPrefHd[i][j][a] = 1 - Math.pow(2.71828, -(arrPrefD[i][j][a] * arrPrefD[i][j][a]) / (2.0d * (batasPref[6][a] * batasPref[6][a])));
 
                         }
                     }

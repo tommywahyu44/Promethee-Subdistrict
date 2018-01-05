@@ -23,7 +23,6 @@
         <activity android:name=".PreferensiActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".ListKecamatanSet.SetKecamatanActivity" />
-        <activity android:name=".BatasPreferensiActivity" />
         <activity android:name=".MultiKriteriaActivity" />
         <activity android:name=".PrometheeRankingActivity" />
         <activity android:name=".ListKecamatanSet.EditKecamatanActivity" />

@@ -1,0 +1,624 @@
+Index: app/src/main/java/com/example/tommywahyu44/promethee/MainActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/tommywahyu44/promethee/MainActivity.java	(revision 0c7d6bf182bf0cd3b9af76d1a8cc6b047006c4a5)
++++ app/src/main/java/com/example/tommywahyu44/promethee/MainActivity.java	(revision )
+@@ -27,7 +27,7 @@
+     TableRow row;
+     TableLayout tableLayout;
+     Button Hapus, Tambah, Selesai, TambahShow, HapusShow;
+-    EditText editHapus, editTambah1, editTambah2, editTambah3;
++    EditText editHapus, editTambah1, editTambah2, editTambah3, editBatas1, editBatas2;
+ 
+     @Override
+     protected void onCreate(Bundle savedInstanceState) {
+@@ -44,6 +44,8 @@
+         editTambah1 = findViewById(R.id.editTambah1);
+         editTambah2 = findViewById(R.id.editTambah2);
+         editTambah3 = findViewById(R.id.editTambah3);
++        editBatas1 = findViewById(R.id.editBatas1);
++        editBatas2 = findViewById(R.id.editBatas2);
+ 
+         HapusShow.setOnClickListener(new View.OnClickListener() {
+             @Override
+@@ -51,6 +53,8 @@
+                 editTambah1.setVisibility(view.GONE);
+                 editTambah2.setVisibility(view.GONE);
+                 editTambah3.setVisibility(view.GONE);
++                editBatas1.setVisibility(View.GONE);
++                editBatas2.setVisibility(View.GONE);
+                 HapusShow.setVisibility(View.GONE);
+                 Tambah.setVisibility(View.GONE);
+                 TambahShow.setVisibility(View.VISIBLE);
+@@ -74,12 +78,17 @@
+             public void onClick(View view) {
+ 
+                 if (Integer.parseInt(editTambah2.getText().toString()) <= 100 && Integer.parseInt(editTambah2.getText().toString()) >= 0 && Integer.parseInt(editTambah3.getText().toString()) <= 6 && Integer.parseInt(editTambah3.getText().toString()) >= 1) {
+-                    TambahRow(editTambah1.getText().toString(), editTambah2.getText().toString(), editTambah3.getText().toString());
++                    if (Integer.parseInt(editTambah3.getText().toString()) == 4 || Integer.parseInt(editTambah3.getText().toString()) == 5)
++                        TambahRow(editTambah1.getText().toString(), editTambah2.getText().toString(), editTambah3.getText().toString(), editBatas1.getText().toString(), editBatas2.getText().toString());
++                    else if (Integer.parseInt(editTambah3.getText().toString()) == 1)
++                        TambahRow(editTambah1.getText().toString(), editTambah2.getText().toString(), editTambah3.getText().toString(), "n/a", "n/a");
++                    else
++                        TambahRow(editTambah1.getText().toString(), editTambah2.getText().toString(), editTambah3.getText().toString(), editBatas1.getText().toString(), "n/a");
+                     Tambah.setVisibility(View.GONE);
+                     tableLayout.setVisibility(View.VISIBLE);
+                     TambahShow.setVisibility(View.VISIBLE);
+ 
+-                } else Toast.makeText(MainActivity.this,"Inputan salah",Toast.LENGTH_LONG ).show();
++                } else Toast.makeText(MainActivity.this, "Inputan salah", Toast.LENGTH_LONG).show();
+             }
+         });
+ 
+@@ -95,6 +104,8 @@
+                 editTambah1.setVisibility(view.VISIBLE);
+                 editTambah2.setVisibility(view.VISIBLE);
+                 editTambah3.setVisibility(view.VISIBLE);
++                editBatas1.setVisibility(View.VISIBLE);
++                editBatas2.setVisibility(View.VISIBLE);
+             }
+         });
+         Hapus.setOnClickListener(new View.OnClickListener() {
+@@ -117,11 +128,36 @@
+ 
+             @Override
+             public void onDataChange(DataSnapshot dataSnapshot) {
++                int countBatas = 0;
+                 for (final DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                     String a = postSnapshot.getKey().toString();
+                     String b = postSnapshot.child("Bobot" + a).getValue().toString();
+                     String c = postSnapshot.child("Preferensi" + a).getValue().toString();
+-                    InsertRow(a, b, c);
++                    String d = postSnapshot.child("Batas1").getValue().toString();
++                    String e = postSnapshot.child("Batas2").getValue().toString();
++                    InsertRow(a, b, c, d, e);
++                    switch (Integer.parseInt(c.toString())) {
++                        case 1:
++                            break;
++                        case 2:
++                            PreferensiActivity.batasPref[0][countBatas] = Integer.parseInt(d.toString());
++                            break;
++                        case 3:
++                            PreferensiActivity.batasPref[1][countBatas] = Integer.parseInt(d.toString());
++                            break;
++                        case 4:
++                            PreferensiActivity.batasPref[2][countBatas] = Integer.parseInt(d.toString());
++                            PreferensiActivity.batasPref[3][countBatas] = Integer.parseInt(e.toString());
++                            break;
++                        case 5:
++                            PreferensiActivity.batasPref[5][countBatas] = Integer.parseInt(d.toString());
++                            PreferensiActivity.batasPref[4][countBatas] = Integer.parseInt(e.toString());
++                            break;
++                        case 6:
++                            PreferensiActivity.batasPref[6][countBatas] = Integer.parseInt(d.toString());
++                            break;
++                    }
++                    countBatas++;
+ 
+ 
+                 }
+@@ -137,31 +173,37 @@
+ 
+     }
+ 
+-    public void InsertRow(String kriteria, String bobot, String preferensi) {
++    public void InsertRow(String kriteria, String bobot, String preferensi, String batas1, String batas2) {
+         tableLayout = findViewById(R.id.tableLayoutMenu);
+         row = (TableRow) getLayoutInflater().inflate(R.layout.activity_menu_row, null);
+ 
+         ((TextView) row.findViewById(R.id.kriteria)).setText(kriteria);
+         ((TextView) row.findViewById(R.id.bobot)).setText(bobot);
+         ((TextView) row.findViewById(R.id.preferensi)).setText(preferensi);
++        ((TextView) row.findViewById(R.id.batas1)).setText(batas1);
++        ((TextView) row.findViewById(R.id.batas2)).setText(batas2);
+ 
+ 
+         tableLayout.addView(row);
+ 
+     }
+ 
+-    public void TambahRow(final String kriteria, String bobot, String preferensi) {
++    public void TambahRow(final String kriteria, String bobot, String preferensi, String batas1, String batas2) {
+         tableLayout = findViewById(R.id.tableLayoutMenu);
+         row = (TableRow) getLayoutInflater().inflate(R.layout.activity_menu_row, null);
+ 
+         ((TextView) row.findViewById(R.id.kriteria)).setText(kriteria);
+         ((TextView) row.findViewById(R.id.bobot)).setText(bobot);
+         ((TextView) row.findViewById(R.id.preferensi)).setText(preferensi);
++        ((TextView) row.findViewById(R.id.batas1)).setText(batas1);
++        ((TextView) row.findViewById(R.id.batas2)).setText(batas2);
+ 
+ 
+         tableLayout.addView(row);
+         mRootref.child("Kriteria").child(kriteria).child("Bobot" + kriteria).setValue(bobot);
+         mRootref.child("Kriteria").child(kriteria).child("Preferensi" + kriteria).setValue(preferensi);
++        mRootref.child("Kriteria").child(kriteria).child("Batas1").setValue(batas1);
++        mRootref.child("Kriteria").child(kriteria).child("Batas2").setValue(batas2);
+         DatabaseReference event = mRootref.child("Kecamatan");
+         event.addListenerForSingleValueEvent(new ValueEventListener() {
+ 
+Index: app/src/main/res/layout/activity_batas_preferensi.xml
+===================================================================
+--- app/src/main/res/layout/activity_batas_preferensi.xml	(revision 0c7d6bf182bf0cd3b9af76d1a8cc6b047006c4a5)
++++ app/src/main/res/layout/activity_batas_preferensi.xml	(revision 0c7d6bf182bf0cd3b9af76d1a8cc6b047006c4a5)
+@@ -1,154 +0,0 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:app="http://schemas.android.com/apk/res-auto"
+-    xmlns:tools="http://schemas.android.com/tools"
+-    android:layout_width="match_parent"
+-    android:layout_height="match_parent"
+-    android:orientation="vertical"
+-
+-    android:background="@color/cardview_light_background"
+-    tools:context="com.example.tommywahyu44.promethee.BatasPreferensiActivity">
+-
+-    <LinearLayout
+-        android:layout_width="match_parent"
+-        android:orientation="vertical"
+-        android:layout_height="match_parent"
+-        android:layout_margin="20dp">
+-    <android.support.design.widget.TextInputLayout
+-        android:layout_width="match_parent"
+-        android:layout_height="wrap_content"
+-
+-        android:theme="@style/TextAppearence.App.TextInputLayout">
+-
+-        <android.support.design.widget.TextInputEditText
+-            android:id="@+id/batas1"
+-            android:layout_width="match_parent"
+-            android:layout_height="match_parent"
+-            android:layout_weight="1"
+-            android:hint="Batas T tipe 2"
+-            android:inputType="numberDecimal"
+-            android:textColorHint="@color/colorPrimary"
+-            android:textColor="#000"
+-           />
+-    </android.support.design.widget.TextInputLayout>
+-
+-    <android.support.design.widget.TextInputLayout
+-        android:layout_width="match_parent"
+-        android:layout_height="wrap_content"
+-
+-        android:theme="@style/TextAppearence.App.TextInputLayout">
+-
+-        <android.support.design.widget.TextInputEditText
+-            android:id="@+id/batas2"
+-            android:layout_width="match_parent"
+-            android:layout_height="match_parent"
+-            android:layout_weight="1"
+-            android:hint="Batas M tipe 3"
+-            android:inputType="numberDecimal"
+-            android:textColorHint="@color/colorPrimary"
+-            android:textColor="#000"
+-         />
+-    </android.support.design.widget.TextInputLayout>
+-
+-    <android.support.design.widget.TextInputLayout
+-        android:layout_width="match_parent"
+-        android:layout_height="wrap_content"
+-
+-        android:theme="@style/TextAppearence.App.TextInputLayout">
+-
+-        <android.support.design.widget.TextInputEditText
+-            android:id="@+id/batas3"
+-            android:layout_width="match_parent"
+-            android:layout_height="match_parent"
+-            android:hint="Batas P tipe 4"
+-            android:layout_weight="1"
+-            android:inputType="numberDecimal"
+-            android:textColorHint="@color/colorPrimary"
+-            android:textColor="#000"
+-           />
+-    </android.support.design.widget.TextInputLayout>
+-
+-    <android.support.design.widget.TextInputLayout
+-        android:layout_width="match_parent"
+-        android:layout_height="wrap_content"
+-
+-        android:theme="@style/TextAppearence.App.TextInputLayout">
+-
+-        <android.support.design.widget.TextInputEditText
+-            android:id="@+id/batas3b"
+-            android:layout_width="match_parent"
+-            android:layout_height="match_parent"
+-            android:layout_weight="1"
+-            android:hint="Batas Q tipe 4"
+-            android:inputType="numberDecimal"
+-            android:textColorHint="@color/colorPrimary"
+-            android:textColor="#000"
+-            />
+-    </android.support.design.widget.TextInputLayout>
+-
+-    <android.support.design.widget.TextInputLayout
+-        android:layout_width="match_parent"
+-        android:layout_height="wrap_content"
+-
+-        android:theme="@style/TextAppearence.App.TextInputLayout">
+-
+-        <android.support.design.widget.TextInputEditText
+-            android:id="@+id/batas4"
+-            android:layout_width="match_parent"
+-            android:layout_height="match_parent"
+-            android:layout_weight="1"
+-            android:hint="Batas S tipe 5"
+-            android:inputType="numberDecimal"
+-            android:textColorHint="@color/colorPrimary"
+-            android:textColor="#000"
+-            />
+-    </android.support.design.widget.TextInputLayout>
+-
+-    <android.support.design.widget.TextInputLayout
+-        android:layout_width="match_parent"
+-        android:layout_height="wrap_content"
+-
+-        android:theme="@style/TextAppearence.App.TextInputLayout">
+-
+-        <android.support.design.widget.TextInputEditText
+-            android:id="@+id/batas4b"
+-            android:layout_width="match_parent"
+-            android:layout_height="match_parent"
+-            android:layout_weight="1"
+-            android:hint="Batas R tipe 5"
+-            android:inputType="numberDecimal"
+-            android:textColorHint="@color/colorPrimary"
+-            android:textColor="#000"
+-            />
+-    </android.support.design.widget.TextInputLayout>
+-
+-    <android.support.design.widget.TextInputLayout
+-        android:layout_width="match_parent"
+-        android:layout_height="wrap_content"
+-
+-        android:theme="@style/TextAppearence.App.TextInputLayout">
+-
+-        <android.support.design.widget.TextInputEditText
+-            android:id="@+id/batas5"
+-            android:layout_width="match_parent"
+-            android:layout_height="match_parent"
+-            android:layout_weight="1"
+-            android:hint="Batas Psi tipe 6"
+-            android:inputType="numberDecimal"
+-            android:textColorHint="@color/colorPrimary"
+-            android:textColor="#000"
+-           />
+-    </android.support.design.widget.TextInputLayout>
+-
+-        <Button
+-            android:id="@+id/buttonBatas"
+-            android:layout_width="wrap_content"
+-            android:layout_height="wrap_content"
+-            android:layout_marginTop="20dp"
+-            android:layout_gravity="center"
+-            android:text="Button" />
+-
+-    </LinearLayout>
+-
+-
+-</LinearLayout>
+Index: app/src/main/java/com/example/tommywahyu44/promethee/SplashScreen.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/tommywahyu44/promethee/SplashScreen.java	(revision 0c7d6bf182bf0cd3b9af76d1a8cc6b047006c4a5)
++++ app/src/main/java/com/example/tommywahyu44/promethee/SplashScreen.java	(revision )
+@@ -35,7 +35,7 @@
+             public void run() {
+                 try {
+                     sleep(0);
+-                    Intent intent = new Intent(getApplicationContext(),BatasPreferensiActivity.class); //first
++                    Intent intent = new Intent(getApplicationContext(),MainActivity.class); //first
+                     startActivity(intent);
+                     finish();
+                 } catch (InterruptedException e) {
+Index: app/src/main/java/com/example/tommywahyu44/promethee/BatasPreferensiActivity.java
+===================================================================
+--- app/src/main/java/com/example/tommywahyu44/promethee/BatasPreferensiActivity.java	(revision 0c7d6bf182bf0cd3b9af76d1a8cc6b047006c4a5)
++++ app/src/main/java/com/example/tommywahyu44/promethee/BatasPreferensiActivity.java	(revision 0c7d6bf182bf0cd3b9af76d1a8cc6b047006c4a5)
+@@ -1,56 +0,0 @@
+-package com.example.tommywahyu44.promethee;
+-
+-import android.content.Intent;
+-import android.support.design.widget.TextInputEditText;
+-import android.support.v7.app.AppCompatActivity;
+-import android.os.Bundle;
+-import android.view.View;
+-import android.widget.Button;
+-
+-import com.google.firebase.database.DatabaseReference;
+-import com.google.firebase.database.FirebaseDatabase;
+-
+-public class BatasPreferensiActivity extends AppCompatActivity {
+-
+-    TextInputEditText batas1,batas2,batas3,batas3b,batas4,batas4b,batas5;
+-    Button buttonBatas;
+-    DatabaseReference mRootref;
+-    @Override
+-    protected void onCreate(Bundle savedInstanceState) {
+-        super.onCreate(savedInstanceState);
+-        setContentView(R.layout.activity_batas_preferensi);
+-        mRootref = FirebaseDatabase.getInstance().getReference();
+-        batas1 = findViewById(R.id.batas1);
+-        batas2 = findViewById(R.id.batas2);
+-        batas3 = findViewById(R.id.batas3);
+-        batas3b = findViewById(R.id.batas3b);
+-        batas4 = findViewById(R.id.batas4);
+-        batas4b = findViewById(R.id.batas4b);
+-        batas5 = findViewById(R.id.batas5);
+-        buttonBatas = findViewById(R.id.buttonBatas);
+-        buttonBatas.setOnClickListener(new View.OnClickListener() {
+-            @Override
+-            public void onClick(View view) {
+-                String batasTipe2 = batas1.getText().toString();
+-                String batasTipe3 = batas2.getText().toString();
+-                String batasTipe4 = batas3.getText().toString();
+-                String batasTipe4b = batas3b.getText().toString();
+-                String batasTipe5 = batas4.getText().toString();
+-                String batasTipe5b = batas4b.getText().toString();
+-                String batasTipe6 = batas5.getText().toString();
+-
+-                mRootref.child("Batas").child("BatasTipe2").setValue(batasTipe2);
+-                mRootref.child("Batas").child("BatasTipe3").setValue(batasTipe3);
+-                mRootref.child("Batas").child("BatasTipe4").setValue(batasTipe4);
+-                mRootref.child("Batas").child("BatasTipe4b").setValue(batasTipe4b);
+-                mRootref.child("Batas").child("BatasTipe5").setValue(batasTipe5);
+-                mRootref.child("Batas").child("BatasTipe5b").setValue(batasTipe5b);
+-                mRootref.child("Batas").child("BatasTipe6").setValue(batasTipe6);
+-                finish();
+-                startActivity(new Intent(BatasPreferensiActivity.this,MainActivity.class));
+-            }
+-        });
+-
+-
+-    }
+-}
+Index: app/src/main/res/layout/activity_menu.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_menu.xml	(revision 0c7d6bf182bf0cd3b9af76d1a8cc6b047006c4a5)
++++ app/src/main/res/layout/activity_menu.xml	(revision )
+@@ -5,15 +5,14 @@
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     android:background="@color/cardview_light_background"
+-    android:padding="20dp"
++
+     android:orientation="vertical"
+     tools:context="com.example.tommywahyu44.promethee.PreferensiActivity">
+ 
+     <TableLayout
+         android:id="@+id/tableLayoutMenu"
+         android:layout_width="match_parent"
+-        android:layout_height="wrap_content"
+-        android:layout_marginTop="10dp">
++        android:layout_height="wrap_content">
+ 
+         <TableRow
+             android:id="@+id/rowLay"
+@@ -24,19 +23,30 @@
+             <TextView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+-                android:layout_weight="3"
++                android:layout_weight="6"
+                 android:text="Kriteria" />
+             <TextView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="1"
+-                android:text="Bobot (dalam %)" />
++                android:text="Bobot" />
+             <TextView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="1"
+                 android:text="Preferensi" />
+ 
++            <TextView
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:layout_weight="1"
++                android:text="Batas1" />
++            <TextView
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:layout_weight="1"
++                android:text="Batas2" />
++
+ 
+ 
+         </TableRow>
+@@ -104,7 +114,7 @@
+             android:layout_gravity="center"
+             android:visibility="gone"/>
+ 
+-        <!-- Kingdom -->
++
+         <android.support.design.widget.TextInputLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+@@ -147,6 +157,36 @@
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:hint="Tipe Preferensi"
++                android:inputType="number"
++                android:textColor="#000"
++                android:visibility="gone"/>
++        </android.support.design.widget.TextInputLayout>
++        <android.support.design.widget.TextInputLayout
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++
++            android:theme="@style/TextAppearence.App.TextInputLayout">
++
++            <android.support.design.widget.TextInputEditText
++                android:id="@+id/editBatas1"
++                android:layout_width="match_parent"
++                android:layout_height="wrap_content"
++                android:hint="Batas 1"
++                android:inputType="number"
++                android:textColor="#000"
++                android:visibility="gone"/>
++        </android.support.design.widget.TextInputLayout>
++        <android.support.design.widget.TextInputLayout
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++
++            android:theme="@style/TextAppearence.App.TextInputLayout">
++
++            <android.support.design.widget.TextInputEditText
++                android:id="@+id/editBatas2"
++                android:layout_width="match_parent"
++                android:layout_height="wrap_content"
++                android:hint="Batas 2"
+                 android:inputType="number"
+                 android:textColor="#000"
+                 android:visibility="gone"/>
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/AndroidManifest.xml	(revision 0c7d6bf182bf0cd3b9af76d1a8cc6b047006c4a5)
++++ app/src/main/AndroidManifest.xml	(revision )
+@@ -23,7 +23,6 @@
+         <activity android:name=".PreferensiActivity" />
+         <activity android:name=".MainActivity" />
+         <activity android:name=".ListKecamatanSet.SetKecamatanActivity" />
+-        <activity android:name=".BatasPreferensiActivity" />
+         <activity android:name=".MultiKriteriaActivity" />
+         <activity android:name=".PrometheeRankingActivity" />
+         <activity android:name=".ListKecamatanSet.EditKecamatanActivity" />
+Index: app/src/main/java/com/example/tommywahyu44/promethee/PreferensiActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/tommywahyu44/promethee/PreferensiActivity.java	(revision 0c7d6bf182bf0cd3b9af76d1a8cc6b047006c4a5)
++++ app/src/main/java/com/example/tommywahyu44/promethee/PreferensiActivity.java	(revision )
+@@ -34,7 +34,7 @@
+     public static double[][][] arrPrefHd = new double[14][14][10];
+     public static int[] bobotKriteria = new int[10];
+     int[] preferensiKriteria = new int[10];
+-    double[] batasPref = new double[7];
++    static double[][] batasPref = new double[7][10];
+     private ProgressDialog progressDialog;
+     ImageView CheckNextIndeks;
+ 
+@@ -225,15 +225,6 @@
+                 }
+                 //l adalah perpindahan kecamatan perb.1,m perpindahan kecamatan perb.2,k kriteria
+ 
+-
+-                batasPref[0] = Double.parseDouble(dataSnapshot.child("Batas").child("BatasTipe2").getValue().toString());
+-                batasPref[1] = Double.parseDouble(dataSnapshot.child("Batas").child("BatasTipe3").getValue().toString());
+-                batasPref[2] = Double.parseDouble(dataSnapshot.child("Batas").child("BatasTipe4").getValue().toString());
+-                batasPref[3] = Double.parseDouble(dataSnapshot.child("Batas").child("BatasTipe4b").getValue().toString());
+-                batasPref[4] = Double.parseDouble(dataSnapshot.child("Batas").child("BatasTipe5").getValue().toString());
+-                batasPref[5] = Double.parseDouble(dataSnapshot.child("Batas").child("BatasTipe5b").getValue().toString());
+-                batasPref[6] = Double.parseDouble(dataSnapshot.child("Batas").child("BatasTipe6").getValue().toString());
+-
+                 switch (countKriteria) {
+                     case 10:
+                         KTT1.setVisibility(View.VISIBLE);
+@@ -329,7 +320,7 @@
+                 case 2:
+                     for (int i = 0; i < 14; i++) {
+                         for (int j = 0; j < 14; j++) {
+-                            if (Math.abs(arrPrefD[i][j][a]) <= batasPref[0])
++                            if (Math.abs(arrPrefD[i][j][a]) <= batasPref[0][a])
+                                 arrPrefHd[i][j][a] = 0;
+                             else arrPrefHd[i][j][a] = 1;
+                         }
+@@ -338,8 +329,8 @@
+                 case 3:
+                     for (int i = 0; i < 14; i++) {
+                         for (int j = 0; j < 14; j++) {
+-                            if (Math.abs(arrPrefD[i][j][a]) <= batasPref[1])
+-                                arrPrefHd[i][j][a] = Math.abs(arrPrefD[i][j][a]) / batasPref[1];
++                            if (Math.abs(arrPrefD[i][j][a]) <= batasPref[1][a])
++                                arrPrefHd[i][j][a] = Math.abs(arrPrefD[i][j][a]) / batasPref[1][a];
+                             else arrPrefHd[i][j][a] = 1;
+                         }
+                     }
+@@ -347,9 +338,9 @@
+                 case 4:
+                     for (int i = 0; i < 14; i++) {
+                         for (int j = 0; j < 14; j++) {
+-                            if (Math.abs(arrPrefD[i][j][a]) <= batasPref[3])
++                            if (Math.abs(arrPrefD[i][j][a]) <= batasPref[3][a])
+                                 arrPrefHd[i][j][a] = 0;
+-                            else if (Math.abs(arrPrefD[i][j][a]) <= (batasPref[2] + batasPref[3]))
++                            else if (Math.abs(arrPrefD[i][j][a]) <= (batasPref[2][a] + batasPref[3][a]))
+                                 arrPrefHd[i][j][a] = 0.5;
+                             else arrPrefHd[i][j][a] = 1;
+                         }
+@@ -358,10 +349,10 @@
+                 case 5:
+                     for (int i = 0; i < 14; i++) {
+                         for (int j = 0; j < 14; j++) {
+-                            if (Math.abs(arrPrefD[i][j][a]) <= batasPref[4])
++                            if (Math.abs(arrPrefD[i][j][a]) <= batasPref[4][a])
+                                 arrPrefHd[i][j][a] = 0;
+-                            else if (Math.abs(arrPrefD[i][j][a]) <= (batasPref[4] + batasPref[5]))
+-                                arrPrefHd[i][j][a] = (Math.abs(arrPrefD[i][j][a]) - batasPref[4]) / batasPref[5];
++                            else if (Math.abs(arrPrefD[i][j][a]) <= (batasPref[4][a] + batasPref[5][a]))
++                                arrPrefHd[i][j][a] = (Math.abs(arrPrefD[i][j][a]) - batasPref[4][a]) / batasPref[5][a];
+                             else arrPrefHd[i][j][a] = 1;
+                         }
+                     }
+@@ -372,7 +363,7 @@
+                             if (Math.abs(arrPrefD[i][j][a]) <= 0)
+                                 arrPrefHd[i][j][a] = 0;
+                             else
+-                                arrPrefHd[i][j][a] = 1 - Math.pow(2.71828, -(arrPrefD[i][j][a] * arrPrefD[i][j][a]) / (2.0d * (batasPref[6] * batasPref[6])));
++                                arrPrefHd[i][j][a] = 1 - Math.pow(2.71828, -(arrPrefD[i][j][a] * arrPrefD[i][j][a]) / (2.0d * (batasPref[6][a] * batasPref[6][a])));
+ 
+                         }
+                     }
+Index: app/src/main/res/layout/activity_menu_row.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_menu_row.xml	(revision 0c7d6bf182bf0cd3b9af76d1a8cc6b047006c4a5)
++++ app/src/main/res/layout/activity_menu_row.xml	(revision )
+@@ -10,7 +10,7 @@
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_gravity="center"
+-        android:layout_weight="3"
++        android:layout_weight="6"
+         android:text=""
+         android:textColor="#000" />
+ 
+@@ -31,6 +31,23 @@
+         android:layout_weight="1"
+         android:text=""
+         android:textColor="#000" />
++    <TextView
++        android:id="@+id/batas1"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_gravity="center"
++        android:layout_weight="1"
++        android:text=""
++        android:textColor="#000"></TextView>
++
++    <TextView
++        android:id="@+id/batas2"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_gravity="center"
++        android:layout_weight="1"
++        android:text=""
++        android:textColor="#000" />
+ 
+ 
+ </TableRow>
+\ No newline at end of file

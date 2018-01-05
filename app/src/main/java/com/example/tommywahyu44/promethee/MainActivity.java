@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     TableRow row;
     TableLayout tableLayout;
     Button Hapus, Tambah, Selesai, TambahShow, HapusShow;
-    EditText editHapus, editTambah1, editTambah2, editTambah3;
+    EditText editHapus, editTambah1, editTambah2, editTambah3, editBatas1, editBatas2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
         editTambah1 = findViewById(R.id.editTambah1);
         editTambah2 = findViewById(R.id.editTambah2);
         editTambah3 = findViewById(R.id.editTambah3);
+        editBatas1 = findViewById(R.id.editBatas1);
+        editBatas2 = findViewById(R.id.editBatas2);
 
         HapusShow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
                 editTambah1.setVisibility(view.GONE);
                 editTambah2.setVisibility(view.GONE);
                 editTambah3.setVisibility(view.GONE);
+                editBatas1.setVisibility(View.GONE);
+                editBatas2.setVisibility(View.GONE);
                 HapusShow.setVisibility(View.GONE);
                 Tambah.setVisibility(View.GONE);
                 TambahShow.setVisibility(View.VISIBLE);
@@ -74,12 +78,17 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 if (Integer.parseInt(editTambah2.getText().toString()) <= 100 && Integer.parseInt(editTambah2.getText().toString()) >= 0 && Integer.parseInt(editTambah3.getText().toString()) <= 6 && Integer.parseInt(editTambah3.getText().toString()) >= 1) {
-                    TambahRow(editTambah1.getText().toString(), editTambah2.getText().toString(), editTambah3.getText().toString());
+                    if (Integer.parseInt(editTambah3.getText().toString()) == 4 || Integer.parseInt(editTambah3.getText().toString()) == 5)
+                        TambahRow(editTambah1.getText().toString(), editTambah2.getText().toString(), editTambah3.getText().toString(), editBatas1.getText().toString(), editBatas2.getText().toString());
+                    else if (Integer.parseInt(editTambah3.getText().toString()) == 1)
+                        TambahRow(editTambah1.getText().toString(), editTambah2.getText().toString(), editTambah3.getText().toString(), "n/a", "n/a");
+                    else
+                        TambahRow(editTambah1.getText().toString(), editTambah2.getText().toString(), editTambah3.getText().toString(), editBatas1.getText().toString(), "n/a");
                     Tambah.setVisibility(View.GONE);
                     tableLayout.setVisibility(View.VISIBLE);
                     TambahShow.setVisibility(View.VISIBLE);
 
-                } else Toast.makeText(MainActivity.this,"Inputan salah",Toast.LENGTH_LONG ).show();
+                } else Toast.makeText(MainActivity.this, "Inputan salah", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -95,6 +104,8 @@ public class MainActivity extends AppCompatActivity {
                 editTambah1.setVisibility(view.VISIBLE);
                 editTambah2.setVisibility(view.VISIBLE);
                 editTambah3.setVisibility(view.VISIBLE);
+                editBatas1.setVisibility(View.VISIBLE);
+                editBatas2.setVisibility(View.VISIBLE);
             }
         });
         Hapus.setOnClickListener(new View.OnClickListener() {
@@ -117,11 +128,36 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                int countBatas = 0;
                 for (final DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     String a = postSnapshot.getKey().toString();
                     String b = postSnapshot.child("Bobot" + a).getValue().toString();
                     String c = postSnapshot.child("Preferensi" + a).getValue().toString();
-                    InsertRow(a, b, c);
+                    String d = postSnapshot.child("Batas1").getValue().toString();
+                    String e = postSnapshot.child("Batas2").getValue().toString();
+                    InsertRow(a, b, c, d, e);
+                    switch (Integer.parseInt(c.toString())) {
+                        case 1:
+                            break;
+                        case 2:
+                            PreferensiActivity.batasPref[0][countBatas] = Integer.parseInt(d.toString());
+                            break;
+                        case 3:
+                            PreferensiActivity.batasPref[1][countBatas] = Integer.parseInt(d.toString());
+                            break;
+                        case 4:
+                            PreferensiActivity.batasPref[2][countBatas] = Integer.parseInt(d.toString());
+                            PreferensiActivity.batasPref[3][countBatas] = Integer.parseInt(e.toString());
+                            break;
+                        case 5:
+                            PreferensiActivity.batasPref[5][countBatas] = Integer.parseInt(d.toString());
+                            PreferensiActivity.batasPref[4][countBatas] = Integer.parseInt(e.toString());
+                            break;
+                        case 6:
+                            PreferensiActivity.batasPref[6][countBatas] = Integer.parseInt(d.toString());
+                            break;
+                    }
+                    countBatas++;
 
 
                 }
@@ -137,31 +173,37 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void InsertRow(String kriteria, String bobot, String preferensi) {
+    public void InsertRow(String kriteria, String bobot, String preferensi, String batas1, String batas2) {
         tableLayout = findViewById(R.id.tableLayoutMenu);
         row = (TableRow) getLayoutInflater().inflate(R.layout.activity_menu_row, null);
 
         ((TextView) row.findViewById(R.id.kriteria)).setText(kriteria);
         ((TextView) row.findViewById(R.id.bobot)).setText(bobot);
         ((TextView) row.findViewById(R.id.preferensi)).setText(preferensi);
+        ((TextView) row.findViewById(R.id.batas1)).setText(batas1);
+        ((TextView) row.findViewById(R.id.batas2)).setText(batas2);
 
 
         tableLayout.addView(row);
 
     }
 
-    public void TambahRow(final String kriteria, String bobot, String preferensi) {
+    public void TambahRow(final String kriteria, String bobot, String preferensi, String batas1, String batas2) {
         tableLayout = findViewById(R.id.tableLayoutMenu);
         row = (TableRow) getLayoutInflater().inflate(R.layout.activity_menu_row, null);
 
         ((TextView) row.findViewById(R.id.kriteria)).setText(kriteria);
         ((TextView) row.findViewById(R.id.bobot)).setText(bobot);
         ((TextView) row.findViewById(R.id.preferensi)).setText(preferensi);
+        ((TextView) row.findViewById(R.id.batas1)).setText(batas1);
+        ((TextView) row.findViewById(R.id.batas2)).setText(batas2);
 
 
         tableLayout.addView(row);
         mRootref.child("Kriteria").child(kriteria).child("Bobot" + kriteria).setValue(bobot);
         mRootref.child("Kriteria").child(kriteria).child("Preferensi" + kriteria).setValue(preferensi);
+        mRootref.child("Kriteria").child(kriteria).child("Batas1").setValue(batas1);
+        mRootref.child("Kriteria").child(kriteria).child("Batas2").setValue(batas2);
         DatabaseReference event = mRootref.child("Kecamatan");
         event.addListenerForSingleValueEvent(new ValueEventListener() {
 
